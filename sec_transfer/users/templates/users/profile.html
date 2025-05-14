@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+  <h1>{% translate 'Profile' %}</h1>
+  <form method="post">
+    {% csrf_token %}
+    {% include 'includes/form.html' with form=form only %}
+    <input type="submit" value="{% translate 'Save changes' %}">
+  </form>
+  <form action="{% url 'users:logout' %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="{% translate 'Log out' %}">
+  </form>
+{% endblock %}

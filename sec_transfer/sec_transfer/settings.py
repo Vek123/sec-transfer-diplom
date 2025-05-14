@@ -55,7 +55,7 @@ ROOT_URLCONF = 'sec_transfer.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,5 +123,10 @@ FIXTURE_DIRS = [
 ]
 
 AUTH_USER_MODEL = 'users.User'
+LOGIN_REDIRECT_URL = 'users:profile'
+LOGIN_URL = 'users:login'
+LOGOUT_REDIRECT_URL = 'users:login'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ORIGIN = env.str('DJANGO_ORIGIN', 'localhost')

@@ -1,0 +1,13 @@
+{% load i18n static %}
+
+<header class="container d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+  <a href="#" class="d-flex align-items-center me-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+    <img src="{% static 'icons/favicon-32x32.png' %}" class="me-2" width="32" height="32" />
+    <span class="fs-4">Security Transfer</span>
+  </a>
+  {% with request.resolver_match.view_name as view_name %}
+    <ul class="nav nav-pills">
+      <li class="nav-item ms-2">{% include "includes/change_language.html" %}</li>
+    </ul>
+  {% endwith %}
+</header>
