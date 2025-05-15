@@ -7,6 +7,6 @@
   <form method="post">
     {% csrf_token %}
     {% include 'includes/form.html' with form=form only %}
-    <input type="submit" value="{% translate 'Sign In' %}">
+    <input class="btn btn-success" type="submit" value="{% translate 'Sign In' %}">
   </form>
 {% endblock %}

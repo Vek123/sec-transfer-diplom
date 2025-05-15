@@ -5,8 +5,12 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from users.managers import UserManager
+
 
 class User(AbstractUser):
+    objects = UserManager()
+
     username = models.CharField(
         _('username'),
         max_length=32,

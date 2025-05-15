@@ -7,6 +7,11 @@
   </a>
   {% with request.resolver_match.view_name as view_name %}
     <ul class="nav nav-pills">
+      {% if user.is_authenticated %}
+        <li class="nav-item"><a href="{% url 'users:profile' %}" class="nav-link{% if view_name == 'users:profile' %} disabled active{% endif %}">{{ user.username }}</a></li>
+      {% else %}
+        <li class="nav-item"><a href="{% url 'users:login' %}" class="nav-link{% if view_name == 'users:login' %} disabled active{% endif %}">{% translate 'Sign In' %}</a></li>
+      {% endif %}
       <li class="nav-item ms-2">{% include "includes/change_language.html" %}</li>
     </ul>
   {% endwith %}

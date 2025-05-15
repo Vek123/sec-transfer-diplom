@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+  <div class="storage-catalog">
+    <h1>{% translate 'Catalog' %}</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              {% if request.GET.sorted_by_field == 'file' %}
+                <a href="{% url 'storage:catalog' %}?sorted_by_field=-file">{% translate 'File name' %}</a>
+                <span class="table__sort ms-2"></span>
+              {% elif request.GET.sorted_by_field == '-file' %}
+                <a href="{% url 'storage:catalog' %}">{% translate 'File name' %}</a>
+                <span class="table__sort ms-2 table__sort_desc"></span>
+              {% else %}
+                <a href="{% url 'storage:catalog' %}?sorted_by_field=file">{% translate 'File name' %}</a>
+              {% endif %}
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              {% if request.GET.sorted_by_field == 'user' %}
+                <a href="{% url 'storage:catalog' %}?sorted_by_field=-user">{% translate 'Author' %}</a>
+                <span class="table__sort ms-2"></span>
+              {% elif request.GET.sorted_by_field == '-user' %}
+                <a href="{% url 'storage:catalog' %}">{% translate 'Author' %}</a>
+                <span class="table__sort ms-2 table__sort_desc"></span>
+              {% else %}
+                <a href="{% url 'storage:catalog' %}?sorted_by_field=user">{% translate 'Author' %}</a>
+              {% endif %}
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              {% if request.GET.sorted_by_field == 'created_at' %}
+                <a href="{% url 'storage:catalog' %}?sorted_by_field=-created_at">{% translate 'Created at' %}</a>
+                <span class="table__sort ms-2"></span>
+              {% elif request.GET.sorted_by_field == '-created_at' %}
+                <a href="{% url 'storage:catalog' %}">{% translate 'Created at' %}</a>
+                <span class="table__sort ms-2 table__sort_desc"></span>
+              {% else %}
+                <a href="{% url 'storage:catalog' %}?sorted_by_field=created_at">{% translate 'Created at' %}</a>
+              {% endif %}
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              {% if request.GET.sorted_by_field == 'updated_at' %}
+                <a href="{% url 'storage:catalog' %}?sorted_by_field=-updated_at">{% translate 'Updated at' %}</a>
+                <span class="table__sort ms-2"></span>
+              {% elif request.GET.sorted_by_field == '-updated_at' %}
+                <a href="{% url 'storage:catalog' %}">{% translate 'Updated at' %}</a>
+                <span class="table__sort ms-2 table__sort_desc"></span>
+              {% else %}
+                <a href="{% url 'storage:catalog' %}?sorted_by_field=updated_at">{% translate 'Updated at' %}</a>
+              {% endif %}
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for file in files %}
+          <tr>
+            <td>{{ file.file.name }}</td>
+            <td>{{ file.user }}</td>
+            <td>{{ file.created_at }}</td>
+            <td>{{ file.updated_at }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

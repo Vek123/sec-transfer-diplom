@@ -1,0 +1,16 @@
+h1 {
+    margin-bottom: 40px;
+}
+
+.table {
+    .table__sort {
+        border: 5px solid transparent;
+        border-top: 5px solid black;
+        display: block;
+        &.table__sort_desc {
+            border: 5px solid transparent;
+            border-bottom: 5px solid black;
+            border-top: unset;
+        }
+    }
+}

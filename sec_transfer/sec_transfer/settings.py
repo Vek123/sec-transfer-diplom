@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storage.apps.StorageConfig',
     'users.apps.UsersConfig',
 ]
 
@@ -126,6 +127,11 @@ AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = 'users:profile'
 LOGIN_URL = 'users:login'
 LOGOUT_REDIRECT_URL = 'users:login'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'users.backends.EmailAuthBackend',
+]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
