@@ -24,6 +24,4 @@ class FileAdmin(admin.ModelAdmin):
         models.File.created_at.field.name,
         models.File.updated_at.field.name,
     )
-    list_display_links = (
-        models.File.file.field.name,
-    )
+    list_display_links = (models.File.file.field.name,)
