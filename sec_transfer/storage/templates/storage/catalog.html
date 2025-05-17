@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load i18n %}
+{% load i18n math_tags url strings %}
 
 {% block content %}
   <div class="storage-catalog">
@@ -12,52 +12,52 @@
           <th scope="col">
             <div class="d-flex align-items-center">
               {% if request.GET.sorted_by_field == 'file' %}
-                <a href="{% url 'storage:catalog' %}?sorted_by_field=-file">{% translate 'File name' %}</a>
+                <a href="{% url 'storage:catalog' %}?{% params_replace request sorted_by_field='-file' %}">{% translate 'File name' %}</a>
                 <span class="table__sort ms-2"></span>
               {% elif request.GET.sorted_by_field == '-file' %}
-                <a href="{% url 'storage:catalog' %}">{% translate 'File name' %}</a>
+                <a href="{% url 'storage:catalog' %}?{% params_replace request sorted_by_field='' %}">{% translate 'File name' %}</a>
                 <span class="table__sort ms-2 table__sort_desc"></span>
               {% else %}
-                <a href="{% url 'storage:catalog' %}?sorted_by_field=file">{% translate 'File name' %}</a>
+                <a href="{% url 'storage:catalog' %}?{% params_replace request sorted_by_field='file' %}">{% translate 'File name' %}</a>
               {% endif %}
             </div>
           </th>
           <th scope="col">
             <div class="d-flex align-items-center">
               {% if request.GET.sorted_by_field == 'user' %}
-                <a href="{% url 'storage:catalog' %}?sorted_by_field=-user">{% translate 'Author' %}</a>
+                <a href="{% url 'storage:catalog' %}?{% params_replace request sorted_by_field='-user' %}">{% translate 'Author' %}</a>
                 <span class="table__sort ms-2"></span>
               {% elif request.GET.sorted_by_field == '-user' %}
-                <a href="{% url 'storage:catalog' %}">{% translate 'Author' %}</a>
+                <a href="{% url 'storage:catalog' %}?{% params_replace request sorted_by_field='' %}">{% translate 'Author' %}</a>
                 <span class="table__sort ms-2 table__sort_desc"></span>
               {% else %}
-                <a href="{% url 'storage:catalog' %}?sorted_by_field=user">{% translate 'Author' %}</a>
+                <a href="{% url 'storage:catalog' %}?{% params_replace request sorted_by_field='user' %}">{% translate 'Author' %}</a>
               {% endif %}
             </div>
           </th>
           <th scope="col">
             <div class="d-flex align-items-center">
               {% if request.GET.sorted_by_field == 'created_at' %}
-                <a href="{% url 'storage:catalog' %}?sorted_by_field=-created_at">{% translate 'Created at' %}</a>
+                <a href="{% url 'storage:catalog' %}?{% params_replace request sorted_by_field='-created_at' %}">{% translate 'Created at' %}</a>
                 <span class="table__sort ms-2"></span>
               {% elif request.GET.sorted_by_field == '-created_at' %}
-                <a href="{% url 'storage:catalog' %}">{% translate 'Created at' %}</a>
+                <a href="{% url 'storage:catalog' %}?{% params_replace request sorted_by_field='' %}">{% translate 'Created at' %}</a>
                 <span class="table__sort ms-2 table__sort_desc"></span>
               {% else %}
-                <a href="{% url 'storage:catalog' %}?sorted_by_field=created_at">{% translate 'Created at' %}</a>
+                <a href="{% url 'storage:catalog' %}?{% params_replace request sorted_by_field='created_at' %}">{% translate 'Created at' %}</a>
               {% endif %}
             </div>
           </th>
           <th scope="col">
             <div class="d-flex align-items-center">
               {% if request.GET.sorted_by_field == 'updated_at' %}
-                <a href="{% url 'storage:catalog' %}?sorted_by_field=-updated_at">{% translate 'Updated at' %}</a>
+                <a href="{% url 'storage:catalog' %}?{% params_replace request sorted_by_field='-updated_at' %}">{% translate 'Updated at' %}</a>
                 <span class="table__sort ms-2"></span>
               {% elif request.GET.sorted_by_field == '-updated_at' %}
-                <a href="{% url 'storage:catalog' %}">{% translate 'Updated at' %}</a>
+                <a href="{% url 'storage:catalog' %}?{% params_replace request sorted_by_field='' %}">{% translate 'Updated at' %}</a>
                 <span class="table__sort ms-2 table__sort_desc"></span>
               {% else %}
-                <a href="{% url 'storage:catalog' %}?sorted_by_field=updated_at">{% translate 'Updated at' %}</a>
+                <a href="{% url 'storage:catalog' %}?{% params_replace request sorted_by_field='updated_at' %}">{% translate 'Updated at' %}</a>
               {% endif %}
             </div>
           </th>
@@ -66,9 +66,9 @@
         </tr>
       </thead>
       <tbody>
-        {% for file in files %}
+        {% for file in page_obj %}
           <tr>
-            <td>{{ file.file.name }}</td>
+            <td>{{ file.file.name|ltruncatechars:30 }}</td>
             <td>{{ file.user }}</td>
             <td>{{ file.created_at }}</td>
             <td>{{ file.updated_at }}</td>
@@ -78,5 +78,28 @@
         {% endfor %}
       </tbody>
     </table>
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li class="page-item"><a href="?{% params_replace request page='1' %}" class="page-link">1</a></li>
+      {% endif %}
+      {% if page_obj.number|subtract:2 > 1 %}
+        <li class="page-item"><a href="?{% params_replace request page=page_obj.number|subtract:2 %}" class="page-link">{{ page_obj.number|subtract:2 }}</a></li>
+      {% endif %}
+      {% if page_obj.number|subtract:1 > 1 %}
+        <li class="page-item"><a href="?{% params_replace request page=page_obj.number|subtract:1 %}" class="page-link">{{ page_obj.number|subtract:1 }}</a></li>
+      {% endif %}
+      {% if page_obj.has_other_pages %}
+        <li class="page-item active" style="cursor: pointer;"><div class="page-link">{{ page_obj.number }}</div></li>
+      {% endif %}
+      {% if page_obj.paginator.num_pages|subtract:page_obj.number > 1 %}
+        <li class="page-item"><a href="?{% params_replace request page=page_obj.number|add:1 %}" class="page-link">{{ page_obj.number|add:1 }}</a></li>
+      {% endif %}
+      {% if page_obj.paginator.num_pages|subtract:page_obj.number > 2 %}
+        <li class="page-item"><a href="?{% params_replace request page=page_obj.number|add:2 %}" class="page-link">{{ page_obj.number|add:2 }}</a></li>
+      {% endif %}
+      {% if page_obj.has_next %}
+        <li class="page-item"><a href="?{% params_replace request page=page_obj.paginator.num_pages %}" class="page-link">{{ page_obj.paginator.num_pages }}</a></li>
+      {% endif %}
+    </ul>
   </div>
 {% endblock %}

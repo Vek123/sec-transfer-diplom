@@ -10,10 +10,13 @@ from core.utils import safe_order_by
 from storage.forms import FileCreateForm
 from storage.models import File
 
+CATALOG_FILES_PER_PAGE = 10
+
 
 class FileCatalogView(LoginRequiredMixin, ListView):
     template_name = 'storage/catalog.html'
     context_object_name = 'files'
+    paginate_by = CATALOG_FILES_PER_PAGE
 
     def get_queryset(self):
         query = File.owned.catalog(self.request.user)
@@ -42,6 +45,10 @@ class FileDeleteView(LoginRequiredMixin, DeleteView):
     model = File
     success_url = reverse_lazy('storage:catalog')
     template_name = 'storage/delete_file.html'
+
+    def form_valid(self, form):
+        messages.success(self.request, _('File was successfully deleted'))
+        return super().form_valid(form)
 
 
 class FileUpdateView(LoginRequiredMixin, UpdateView):
