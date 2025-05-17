@@ -13,6 +13,7 @@ inline-quotes = "single"
 import-order-style = "google"
 application-import-names = [
     "core",
+    "download",
     "storage",
     "users"
 ]

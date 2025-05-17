@@ -8,5 +8,6 @@
     {% csrf_token %}
     {% include 'includes/form.html' with form=form only %}
     <input class="btn btn-success" type="submit" value="{% translate 'Sign In' %}">
+    <a class="btn btn-primary" href="{% url 'users:signup' %}">{% translate 'Sign Up' %}</a>
   </form>
 {% endblock %}

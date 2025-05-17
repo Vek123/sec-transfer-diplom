@@ -25,6 +25,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_cleanup.apps.CleanupConfig',
+    'core.apps.CoreConfig',
+    'download.apps.DownloadConfig',
     'storage.apps.StorageConfig',
     'users.apps.UsersConfig',
 ]
@@ -135,4 +138,10 @@ AUTHENTICATION_BACKENDS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ORIGIN = env.str('DJANGO_ORIGIN', 'localhost')
+DJANGO_MAIL = env.str('DJANGO_MAIL', 'default@default.ru')
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+
+EMAIL_FILE_PATH = BASE_DIR / 'send_mail'
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'

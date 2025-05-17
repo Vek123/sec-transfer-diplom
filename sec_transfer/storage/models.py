@@ -4,12 +4,13 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from storage.apps import StorageConfig
-from storage.managers import FileManager
+from storage.managers import FileManager, OwnedFileManager
 from users.models import User
 
 
 class File(models.Model):
     objects = FileManager()
+    owned = OwnedFileManager()
 
     def _upload_to(self, filename):
         return f'{StorageConfig.name}/{self.user.username}/{filename}'

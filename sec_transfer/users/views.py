@@ -1,6 +1,5 @@
 __all__ = ()
 
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.tokens import default_token_generator
@@ -53,9 +52,11 @@ class SignUpView(FormView):
     def send_verification_email(self, user):
         token = default_token_generator.make_token(user)
         uid = urlsafe_base64_encode(force_bytes(user.pk))
-        verification_link = settings.ORIGIN + reverse(
-            'users:verify_email',
-            args=[uid, token],
+        verification_link = self.request.build_absolute_uri(
+            reverse(
+                'users:verify_email',
+                args=[uid, token],
+            ),
         )
 
         subject = _('Подтверждение регистрации')

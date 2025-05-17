@@ -7,6 +7,7 @@
   </a>
   {% with request.resolver_match.view_name as view_name %}
     <ul class="nav nav-pills">
+      <li class="nav-item"><a href="{% url 'storage:catalog' %}" class="nav-link{% if view_name == 'storage:catalog' %} disabled active{% endif %}">{% translate 'Storage' %}</a></li>
       {% if user.is_authenticated %}
         <li class="nav-item"><a href="{% url 'users:profile' %}" class="nav-link{% if view_name == 'users:profile' %} disabled active{% endif %}">{{ user.username }}</a></li>
       {% else %}
