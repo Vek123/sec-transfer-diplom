@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_cleanup.apps.CleanupConfig',
     'core.apps.CoreConfig',
+    'crypto.apps.CryptoConfig',
     'download.apps.DownloadConfig',
     'storage.apps.StorageConfig',
     'users.apps.UsersConfig',
@@ -145,3 +146,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = BASE_DIR / 'send_mail'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
+
+RSA_PEM_KEY = env.str('DJANGO_RSA_PEM_KEY', 'rsa_key')
