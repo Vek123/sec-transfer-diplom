@@ -1,6 +1,6 @@
 __all__ = ()
 
-
+import base64
 import contextlib
 import os
 from pathlib import Path
@@ -26,6 +26,7 @@ RSA_SIGN_PADDING = padding.PSS(
     ),
     padding.PSS.MAX_LENGTH,
 )
+RSA_PUBLIC_KEY_COOKIE_NAME = 'public_key'
 
 
 def encrypt_file(file: bytes) -> tuple[bytes]:
@@ -42,14 +43,18 @@ def encrypt_file(file: bytes) -> tuple[bytes]:
     cipher = Cipher(algorithms.AES(aes_key), modes.GCM(iv))
     encryptor = cipher.encryptor()
     secret_data = encryptor.update(file) + encryptor.finalize()
+    aes_signature = sign_aes_key(aes_key)
+
+    return (secret_data, aes_key, aes_signature, encryptor.tag, iv)
+
+
+def sign_aes_key(aes_key: bytes) -> bytes:
     with get_private_key() as private_key:
-        aes_signature = private_key.sign(
+        return private_key.sign(
             aes_key,
             RSA_SIGN_PADDING,
             hashes.SHA256(),
         )
-
-    return (secret_data, aes_key, aes_signature, encryptor.tag, iv)
 
 
 def decrypt_file(
@@ -91,3 +96,23 @@ def get_private_key() -> Generator[rsa.RSAPrivateKey, None, None]:
             password=bytes(settings.SECRET_KEY, 'utf-8'),
             backend=default_backend(),
         )
+
+
+def set_public_key_header():
+    public_key = get_public_key().public_bytes(
+        encoding=serialization.Encoding.DER,
+        format=serialization.PublicFormat.SubjectPublicKeyInfo,
+    )
+    public_key = base64.b64encode(public_key)
+    return (
+        f'{RSA_PUBLIC_KEY_COOKIE_NAME}={public_key}; Path=/; Secure;'
+        ' SameSite=None; Partitioned;'
+    )
+
+
+def remove_public_key_header():
+    return (
+        f'{RSA_PUBLIC_KEY_COOKIE_NAME}=;'
+        ' Expires=Thu, 01 Jan 1970 00:00:00 GMT; Path=/; Secure;'
+        ' SameSite=None; Partitioned;'
+    )

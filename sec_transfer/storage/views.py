@@ -1,12 +1,18 @@
 __all__ = ()
 
+import base64
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
+from django.views import View
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+from django.views.generic.detail import SingleObjectMixin
 
 from core.utils import safe_order_by
+from crypto.utils import get_private_key, RSA_ENCRYPT_PADDING, sign_aes_key
 from storage.forms import FileCreateForm
 from storage.models import File
 
@@ -62,3 +68,29 @@ class FileUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         messages.success(self.request, _('File was successfully updated'))
         return super().form_valid(form)
+
+
+class FileCryptoDataView(LoginRequiredMixin, SingleObjectMixin, View):
+    queryset = File.objects.values(
+        File.iv.field.name,
+        File.encrypted_key.field.name,
+        File.gcm_tag.field.name,
+    )
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, pk):
+        aes_key = base64.b64decode(self.object[File.encrypted_key.field.name])
+        with get_private_key() as private_key:
+            aes_key = private_key.decrypt(aes_key, RSA_ENCRYPT_PADDING)
+            aes_key_sign = sign_aes_key(aes_key)
+            self.object[File.encrypted_key.field.name] = (
+                base64.b64encode(aes_key).decode()
+            )
+            self.object['aes_key_sign'] = (
+                base64.b64encode(aes_key_sign).decode()
+            )
+
+        return JsonResponse(self.object)

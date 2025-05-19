@@ -19,10 +19,20 @@ class File(models.Model):
         _('file'),
         upload_to=_upload_to,
     )
-    encrypted_key = models.CharField(
-        _('encrypted key'),
+    iv = models.CharField(
+        _('AES iv'),
         max_length=32,
-        help_text=_('Max length 32'),
+        editable=True,
+    )
+    gcm_tag = models.CharField(
+        _('AES gcm'),
+        max_length=32,
+        editable=True,
+    )
+    encrypted_key = models.CharField(
+        _('AES encrypted key'),
+        max_length=512,
+        editable=True,
     )
     created_at = models.DateTimeField(
         _('created at'),

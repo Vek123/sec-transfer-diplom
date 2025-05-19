@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
-{% load i18n math_tags url strings %}
+{% load i18n static math_tags url strings %}
 
 {% block content %}
   <div class="storage-catalog">
     <h1>{% translate 'Catalog' %}</h1>
     <a href="{% url 'storage:create' %}" class="btn btn-success">{% translate 'Create' %}</a>
+    <a href="{% url 'crypto:get-public-key' %}" class="btn btn-primary">{% translate 'Get Public Key' %}</a>
     <table class="table">
       <thead>
         <tr>
@@ -63,16 +64,18 @@
           </th>
           <th></th>
           <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         {% for file in page_obj %}
-          <tr>
+          <tr class="file" data-file-id="{{ file.pk }}" data-file-url="{{ file.file.url }}">
             <td>{{ file.file.name|ltruncatechars:30 }}</td>
             <td>{{ file.user }}</td>
             <td>{{ file.created_at }}</td>
             <td>{{ file.updated_at }}</td>
-            <td><a href="{% url 'storage:update' pk=file.pk %}" class="btn btn-success">{% translate 'Update' %}</a></td>
+            <td><button class="btn btn-success file__download">{% translate 'Download' %}</button></td>
+            <td><a href="{% url 'storage:update' pk=file.pk %}" class="btn btn-warning">{% translate 'Update' %}</a></td>
             <td><a href="{% url 'storage:delete' pk=file.pk %}" class="btn btn-danger">{% translate 'Delete' %}</a></td>
           </tr>
         {% endfor %}
@@ -102,4 +105,13 @@
       {% endif %}
     </ul>
   </div>
+{% endblock %}
+
+{% block extra_body %}
+  <script src="{% static 'js/apps/storage/catalog.js' %}"></script>
+  <script>
+    const getFileCryptoDataUrl = () => {
+      return '{% url "storage:crypto" pk=0 %}'.replace('0', '{0}');
+    }
+  </script>
 {% endblock %}
