@@ -20,6 +20,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
+        self.stdout.write('Private key is generating...')
         file_path = options['file_path']
         private_key = rsa.generate_private_key(
             public_exponent=65537,
@@ -35,3 +36,7 @@ class Command(BaseCommand):
         )
         with Path(file_path).open('wb') as pem_out:
             pem_out.write(pem)
+
+        self.stdout.write(
+            self.style.SUCCESS('Private key was generated successfully'),
+        )
