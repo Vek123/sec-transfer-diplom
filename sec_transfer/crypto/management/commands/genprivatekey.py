@@ -31,7 +31,7 @@ class Command(BaseCommand):
             encoding=serialization.Encoding.PEM,
             format=serialization.PrivateFormat.PKCS8,
             encryption_algorithm=serialization.BestAvailableEncryption(
-                bytes(settings.RSA_PEM_KEY, 'utf-8'),
+                bytes(settings.SECRET_KEY, 'utf-8'),
             ),
         )
         with Path(file_path).open('wb') as pem_out:

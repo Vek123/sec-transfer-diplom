@@ -147,4 +147,4 @@ EMAIL_FILE_PATH = BASE_DIR / 'send_mail'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
 
-RSA_PEM_KEY = env.str('DJANGO_RSA_PEM_KEY', 'rsa_key')
+RSA_PEM_KEY_FILE = Path(env.str('DJANGO_RSA_PEM_KEY_FILE', 'rsa_key.pem'))
