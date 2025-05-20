@@ -20,6 +20,54 @@ const encryptFile = async (fileData) => {
     return [ encryptedData, aesKey, iv, tag ]
 }
 
+const encryptFormFile = async (fileInput, ivInput, gcmTagInput, encryptedKeyInput) => {
+    const reader = new FileReader();
+    const file = fileInput.files[0];
+    reader.onload = async e => {
+        const [ data, aesKey, iv, tag ] = await encryptFile(e.target.result);
+        fileInput.files = arrayBufferToDataTransfer(data, file.name, file.type).files;
+        ivInput.value = bufferToBase64(iv);
+        gcmTagInput.value = bufferToBase64(tag);
+        const encrypted_aes_key = await encryptAESKey(aesKey)
+        encryptedKeyInput.value = bufferToBase64(encrypted_aes_key);
+    }
+    reader.readAsArrayBuffer(file);
+}
+
+const decryptFile = async (fileData, aesKey, gcmTag, iv) => {
+    const encryptedData = concatenate(new Uint8Array(fileData), new Uint8Array(gcmTag))
+    
+    const decryptedData = await crypto.subtle.decrypt(
+        { name: 'AES-GCM', iv: iv, tagLength: 128 },
+        aesKey,
+        encryptedData.buffer,
+    )
+    return decryptedData;
+}
+
+const encryptAESKey = async (aesKey, publicKey=null) => {
+    if (!publicKey) {
+        publicKey = await getEncryptPublicKey();
+    }
+    return await crypto.subtle.encrypt(
+        { name: 'RSA-OAEP' },
+        publicKey,
+        await crypto.subtle.exportKey('raw', aesKey),
+    )
+}
+
+const verifyWithPublicKey = async (signature, signedData, publicKey=null) => {
+    if (!publicKey) {
+        publicKey = await getVerifyPublicKey();
+    }
+    return await crypto.subtle.verify(
+        { name: 'RSA-PSS', saltLength: 222 },
+        publicKey,
+        signature,
+        signedData,
+    )
+}
+
 const getPublicKeyStr = () => {
     const re = new RegExp(`${getRSAPublicKeyCookieName()}=([^;]+)`);
     const match = document.cookie.match(re);
@@ -55,6 +103,20 @@ const getVerifyPublicKey = async () => {
     return key;
 }
 
+const importAESKey = async (aesKey, keyUsages) => {
+    return await crypto.subtle.importKey(
+        'raw',
+        aesKey,
+        { name: 'AES-GCM' },
+        true,
+        keyUsages,
+    )
+}
+
 const bufferToBase64 = (buf) => {
     return btoa(String.fromCharCode.apply(null, new Uint8Array(buf)));
+}
+
+const base64ToBuffer = (data) => {
+    return Uint8Array.from(atob(data), c => c.charCodeAt(0))
 }

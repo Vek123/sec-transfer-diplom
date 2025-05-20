@@ -1,4 +1,4 @@
-const createFileForm = document.getElementById('create-file-form');
+const createFileForm = document.getElementById('update-file-form');
 
 const fileInput = createFileForm.querySelector('input[name="file"]');
 const ivInput = createFileForm.querySelector('input[name="iv"]');

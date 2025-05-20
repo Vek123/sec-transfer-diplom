@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 
-{% load i18n %}
+{% load i18n static %}
 
 {% block content %}
   <h1>{% translate 'Update file in storage' %}</h1>
-  <form method="post" enctype="multipart/form-data">
+  <form method="post" enctype="multipart/form-data" id="update-file-form">
     {% csrf_token %}
     {% include 'includes/form.html' with form=form only %}
     <input type="submit" value="{% translate 'Update' %}" class="btn btn-success">
   </form>
+{% endblock %}
+
+{% block extra_body %}
+  <script src="{% static 'js/apps/storage/update_file.js' %}"></script>
 {% endblock %}

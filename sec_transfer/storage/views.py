@@ -44,6 +44,7 @@ class FileCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        messages.success(self.request, _('File was successfully created'))
         return super().form_valid(form)
 
 
@@ -85,12 +86,13 @@ class FileCryptoDataView(LoginRequiredMixin, SingleObjectMixin, View):
         aes_key = base64.b64decode(self.object[File.encrypted_key.field.name])
         with get_private_key() as private_key:
             aes_key = private_key.decrypt(aes_key, RSA_ENCRYPT_PADDING)
-            aes_key_sign = sign_aes_key(aes_key)
-            self.object[File.encrypted_key.field.name] = (
-                base64.b64encode(aes_key).decode()
-            )
-            self.object['aes_key_sign'] = (
-                base64.b64encode(aes_key_sign).decode()
-            )
+
+        aes_key_sign = sign_aes_key(aes_key)
+        self.object[File.encrypted_key.field.name] = (
+            base64.b64encode(aes_key).decode()
+        )
+        self.object['aes_key_sign'] = (
+            base64.b64encode(aes_key_sign).decode()
+        )
 
         return JsonResponse(self.object)
