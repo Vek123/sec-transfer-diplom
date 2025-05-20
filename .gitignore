@@ -178,3 +178,5 @@ media/
 send_mail/
 
 *.pem
+
+database/

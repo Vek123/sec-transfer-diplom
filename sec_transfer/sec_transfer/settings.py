@@ -5,7 +5,7 @@ import environ
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env()
-env.read_env(BASE_DIR / '.env')
+env.read_env(BASE_DIR.parent / '.env')
 
 SECRET_KEY = env.str('DJANGO_SECRET_KEY', 'secret')
 
@@ -82,6 +82,21 @@ DATABASES = {
     },
 }
 
+if not DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'OPTIONS': {
+                'pool': True,
+            },
+            'HOST': env.str('POSTGRES_HOST', 'postgresql'),
+            'PORT': env.str('POSTGRES_PORT', '5432'),
+            'USER': env.str('POSTGRES_USER', 'user'),
+            'PASSWORD': env.str('POSTGRES_PASSWORD', 'password'),
+            'NAME': env.str('POSTGRES_DB', 'database'),
+        },
+    }
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': (
@@ -115,8 +130,12 @@ LANGUAGES = [
     ('ru', 'Русский'),
     ('en', 'English'),
 ]
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static_dev',
 ]
@@ -149,3 +168,9 @@ EMAIL_FILE_PATH = BASE_DIR / 'send_mail'
 MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
 
 RSA_PEM_KEY_FILE = Path(env.str('DJANGO_RSA_PEM_KEY_FILE', 'rsa_key.pem'))
+
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True

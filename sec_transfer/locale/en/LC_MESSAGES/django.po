@@ -1,0 +1,331 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-20 21:13+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: .\core\apps.py:10
+msgid "Core"
+msgstr ""
+
+#: .\crypto\apps.py:10
+msgid "Crypto"
+msgstr ""
+
+#: .\crypto\views.py:16
+msgid "Public key was successfully updated"
+msgstr ""
+
+#: .\download\apps.py:10 .\storage\templates\storage\catalog.html:77
+msgid "Download"
+msgstr ""
+
+#: .\storage\apps.py:10 .\templates\includes\header.html:10
+msgid "Storage"
+msgstr ""
+
+#: .\storage\models.py:19
+msgid "file"
+msgstr ""
+
+#: .\storage\models.py:23
+msgid "AES iv"
+msgstr ""
+
+#: .\storage\models.py:28
+msgid "AES gcm"
+msgstr ""
+
+#: .\storage\models.py:33
+msgid "AES encrypted key"
+msgstr ""
+
+#: .\storage\models.py:38
+msgid "created at"
+msgstr ""
+
+#: .\storage\models.py:43
+msgid "updated at"
+msgstr ""
+
+#: .\storage\templates\storage\catalog.html:7
+msgid "Catalog"
+msgstr ""
+
+#: .\storage\templates\storage\catalog.html:8
+#: .\storage\templates\storage\create_file.html:10
+msgid "Create"
+msgstr ""
+
+#: .\storage\templates\storage\catalog.html:9
+msgid "Get Public Key"
+msgstr ""
+
+#: .\storage\templates\storage\catalog.html:16
+#: .\storage\templates\storage\catalog.html:19
+#: .\storage\templates\storage\catalog.html:22
+msgid "File name"
+msgstr ""
+
+#: .\storage\templates\storage\catalog.html:29
+#: .\storage\templates\storage\catalog.html:32
+#: .\storage\templates\storage\catalog.html:35
+msgid "Author"
+msgstr ""
+
+#: .\storage\templates\storage\catalog.html:42
+#: .\storage\templates\storage\catalog.html:45
+#: .\storage\templates\storage\catalog.html:48
+msgid "Created at"
+msgstr ""
+
+#: .\storage\templates\storage\catalog.html:55
+#: .\storage\templates\storage\catalog.html:58
+#: .\storage\templates\storage\catalog.html:61
+msgid "Updated at"
+msgstr ""
+
+#: .\storage\templates\storage\catalog.html:78
+#: .\storage\templates\storage\update_file.html:10
+msgid "Update"
+msgstr ""
+
+#: .\storage\templates\storage\catalog.html:79
+msgid "Delete"
+msgstr ""
+
+#: .\storage\templates\storage\create_file.html:6
+msgid "Loading file to the storage"
+msgstr ""
+
+#: .\storage\templates\storage\delete_file.html:6
+msgid "Delete confirmation"
+msgstr ""
+
+#: .\storage\templates\storage\delete_file.html:7
+msgid "Do you confirm deletion? The file can\\"
+msgstr ""
+
+#: .\storage\templates\storage\delete_file.html:9
+msgid "File name:"
+msgstr ""
+
+#: .\storage\templates\storage\delete_file.html:13
+msgid "Confirm"
+msgstr ""
+
+#: .\storage\templates\storage\update_file.html:6
+msgid "Update file in storage"
+msgstr ""
+
+#: .\storage\views.py:47
+msgid "File was successfully created"
+msgstr ""
+
+#: .\storage\views.py:57
+msgid "File was successfully deleted"
+msgstr ""
+
+#: .\storage\views.py:70
+msgid "File was successfully updated"
+msgstr ""
+
+#: .\templates\base.html:25
+msgid "No content"
+msgstr ""
+
+#: .\templates\includes\footer.html:5
+msgid "Personal data"
+msgstr ""
+
+#: .\templates\includes\footer.html:6
+msgid "Consumer rights"
+msgstr ""
+
+#: .\templates\includes\header.html:14 .\users\templates\users\login.html:6
+#: .\users\templates\users\login.html:10
+msgid "Sign In"
+msgstr ""
+
+#: .\users\apps.py:10
+msgid "Users"
+msgstr ""
+
+#: .\users\forms.py:15
+msgid "Минимум 8 символов"
+msgstr ""
+
+#: .\users\forms.py:18
+msgid "Повторите пароль"
+msgstr ""
+
+#: .\users\forms.py:28
+msgid "Логин"
+msgstr ""
+
+#: .\users\forms.py:29
+msgid "Адрес электронной почты"
+msgstr ""
+
+#: .\users\forms.py:32
+msgid "Максимум 150 символов"
+msgstr ""
+
+#: .\users\forms.py:33 .\users\forms.py:58
+msgid "Максимум 254 символа"
+msgstr ""
+
+#: .\users\forms.py:39
+msgid "Логин или почта"
+msgstr ""
+
+#: .\users\forms.py:48 .\users\forms.py:51
+msgid "Введите пароль длиной от 8 символов"
+msgstr ""
+
+#: .\users\forms.py:57
+msgid "Введите почту, привязанную к аккаунту"
+msgstr ""
+
+#: .\users\forms.py:77
+msgid "Имя"
+msgstr ""
+
+#: .\users\forms.py:78
+msgid "Фамилия"
+msgstr ""
+
+#: .\users\forms.py:79
+msgid "Отчество (при наличии)"
+msgstr ""
+
+#: .\users\models.py:15
+msgid "username"
+msgstr ""
+
+#: .\users\models.py:19
+msgid "Обязательно. 32 символа или меньше. Только буквы, цифры и @/./+/-/_"
+msgstr ""
+
+#: .\users\models.py:24
+msgid "Пользователь с таким именем уже существует."
+msgstr ""
+
+#: .\users\models.py:28
+msgid "email address"
+msgstr ""
+
+#: .\users\models.py:31
+msgid "Должен соответствовать формату <АДРЕС>@<ДОМЕН>.<ЗОНА>"
+msgstr ""
+
+#: .\users\models.py:34
+msgid "patronymic"
+msgstr ""
+
+#: .\users\templates\users\confirmation_email_text.html:3
+#, python-format
+msgid ""
+"\n"
+"  Hello %(user_name)s. Please, confirm your email \n"
+"  by following the link: %(confirmation_url)s.\n"
+"  If you didn't register on our website, just ignore this message.\n"
+msgstr ""
+
+#: .\users\templates\users\login.html:11 .\users\templates\users\signup.html:6
+#: .\users\templates\users\signup.html:10
+msgid "Sign Up"
+msgstr ""
+
+#: .\users\templates\users\logout.html:6
+msgid "You successfully logged out!"
+msgstr ""
+
+#: .\users\templates\users\password_change.html:6
+#: .\users\templates\users\password_change.html:10
+#: .\users\templates\users\password_reset_confirm.html:10
+msgid "Change password"
+msgstr ""
+
+#: .\users\templates\users\password_change_done.html:6
+msgid "You successfully changed your password!"
+msgstr ""
+
+#: .\users\templates\users\password_reset.html:6
+#: .\users\templates\users\password_reset.html:10
+#: .\users\templates\users\password_reset_confirm.html:6
+msgid "Reset password"
+msgstr ""
+
+#: .\users\templates\users\password_reset_done.html:6
+msgid "Email was sent"
+msgstr ""
+
+#: .\users\templates\users\password_reset_email.html:3
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr ""
+
+#: .\users\templates\users\password_reset_email.html:4
+msgid "Please go to the following page and choose a new password:"
+msgstr ""
+
+#: .\users\templates\users\password_reset_email.html:8
+msgid "In case you’ve forgotten, you are:"
+msgstr ""
+
+#: .\users\templates\users\password_reset_email.html:9
+msgid "Thanks for using our site!"
+msgstr ""
+
+#: .\users\templates\users\password_reset_email.html:10
+#, python-format
+msgid "The %(site_name)s team"
+msgstr ""
+
+#: .\users\templates\users\profile.html:6
+msgid "Profile"
+msgstr ""
+
+#: .\users\templates\users\profile.html:10
+msgid "Save changes"
+msgstr ""
+
+#: .\users\templates\users\profile.html:14
+msgid "Log out"
+msgstr ""
+
+#: .\users\views.py:34
+msgid "Изменения сохранены"
+msgstr ""
+
+#: .\users\views.py:47
+msgid "Пожалуйста, перейдите по ссылке в письме, чтобы подвердить почту"
+msgstr ""
+
+#: .\users\views.py:62
+msgid "Подтверждение регистрации"
+msgstr ""
+
+#: .\users\views.py:94
+msgid "Почта успешно активирована"
+msgstr ""
+
+#: .\users\views.py:97
+msgid "Не удалось активировать почту"
+msgstr ""
