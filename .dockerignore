@@ -1,0 +1,16 @@
+.git/
+**/.gitignore
+**/.dockerignore
+**/Dockerfile
+
+**/.venv/
+**/__pycache__/
+**/send_mail/
+**/media/
+**/static/
+
+**/*.sqlite3
+**/*.md
+**/*.lock
+**/*.yaml
+**/*.env
