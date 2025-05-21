@@ -15,6 +15,7 @@ application-import-names = [
     "core",
     "crypto",
     "download",
+    "homepage",
     "storage",
     "users"
 ]

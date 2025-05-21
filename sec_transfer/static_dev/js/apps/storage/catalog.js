@@ -14,8 +14,9 @@ const downloadFile = async (event) => {
     iv = base64ToBuffer(iv);
 
     if (!await verifyWithPublicKey(aesKeySign, aesKey, publicKey)) {
-        addMessageError('AES key was compromitised while delivering from the server. File was not downloaded. Try again later...');
-        return;
+        const errorMsg = 'AES key was compromitised while delivering from the server. File was not downloaded. Try again later...';
+        addMessageError(errorMsg);
+        throw new Error(errorMsg);
     }
 
     const aesCryptoKey = await importAESKey(aesKey, ['decrypt'])
@@ -26,8 +27,9 @@ const downloadFile = async (event) => {
     try {
         data = await decryptFile(fileBuffer, aesCryptoKey, gcmTag, iv);
     } catch (error) {
-        addMessageError('GMC tag found that file was compromitised while delivering from the server. File was not downloaded. Try again later...');
-        return;
+        const errorMsg = 'GMC tag found that file was compromitised while delivering from the server. File was not downloaded. Try again later...';
+        addMessageError(errorMsg);
+        throw new Error(errorMsg);
     }
     const decryptedFile = new Blob([data], {type: fileBlob.type});
 

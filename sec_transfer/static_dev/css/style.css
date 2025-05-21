@@ -14,3 +14,8 @@ h1 {
         }
     }
 }
+
+.file__operation {
+    display: inline-block;
+    width: 30px;
+}

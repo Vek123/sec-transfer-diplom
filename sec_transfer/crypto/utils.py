@@ -103,7 +103,7 @@ def set_public_key_header():
         encoding=serialization.Encoding.DER,
         format=serialization.PublicFormat.SubjectPublicKeyInfo,
     )
-    public_key = base64.b64encode(public_key)
+    public_key = base64.b64encode(public_key).decode()
     return (
         f'{RSA_PUBLIC_KEY_COOKIE_NAME}={public_key}; Path=/; Secure;'
         ' SameSite=None; Partitioned;'

@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'crypto.apps.CryptoConfig',
     'download.apps.DownloadConfig',
+    'homepage.apps.HomepageConfig',
     'storage.apps.StorageConfig',
     'users.apps.UsersConfig',
 ]
@@ -169,8 +170,9 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
 
 RSA_PEM_KEY_FILE = Path(env.str('DJANGO_RSA_PEM_KEY_FILE', 'rsa_key.pem'))
 
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True

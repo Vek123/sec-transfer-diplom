@@ -73,7 +73,9 @@ const getPublicKeyStr = () => {
     const match = document.cookie.match(re);
     
     if (!match || !match[1]) {
-        throw new Error('RSA public key not found in cookie');
+        const errorMsg = 'RSA public key not found in cookie';
+        addMessageError(errorMsg);
+        throw new Error(errorMsg);
     }
     
     return Uint8Array.from(atob(match[1].replace(/^b?'|'$/g, '')), c => c.charCodeAt(0));

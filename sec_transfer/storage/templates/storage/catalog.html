@@ -74,9 +74,9 @@
             <td>{{ file.user }}</td>
             <td>{{ file.created_at }}</td>
             <td>{{ file.updated_at }}</td>
-            <td><button class="btn btn-success file__download">{% translate 'Download' %}</button></td>
-            <td><a href="{% url 'storage:update' pk=file.pk %}" class="btn btn-warning">{% translate 'Update' %}</a></td>
-            <td><a href="{% url 'storage:delete' pk=file.pk %}" class="btn btn-danger">{% translate 'Delete' %}</a></td>
+            <td><a href="#" class="file__operation file__download"><img src="{% static 'icons/storage/download.svg' %}" alt="{% translate 'Download' %}"></a></td>
+            <td><a href="{% url 'storage:update' pk=file.pk %}" class="file__operation"><img src="{% static 'icons/storage/edit.svg' %}" alt="{% translate 'Edit' %}"></a></td>
+            <td><a href="{% url 'storage:delete' pk=file.pk %}" class="file__operation"><img src="{% static 'icons/storage/delete.svg' %}" alt="{% translate 'Delete' %}"></a></td>
           </tr>
         {% endfor %}
       </tbody>
